@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { PopupEpisodes } from './PopupEpisodes';
 import { PopupHeader } from './PopupHeader';
 import { PopupInfo } from './PopupInfo';
+import { useEffect } from 'react';
 
 export function Popup({ settings: { visible, content = {} }, setSettings }) {
   const {
@@ -17,18 +18,40 @@ export function Popup({ settings: { visible, content = {} }, setSettings }) {
   } = content;
 
   function togglePopup(e) {
-    if (e.currentTarget !== e.target) {
-      return;
+    if (e.currentTarget === e.target) {
+      setSettings((prevState) => ({
+        ...prevState,
+        visible: false
+      }));
     }
-
-    setSettings((prevState) => ({
-      ...prevState,
-      visible: !prevState.visible
-    }));
   }
 
+  function handleEscClose(e) {
+    if (e.key === 'Escape') {
+      setSettings((prevState) => ({
+        ...prevState,
+        visible: false
+      }));
+    }
+  }
+
+  useEffect(() => {
+    if (visible) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleEscClose);
+    } else {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleEscClose);
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleEscClose);
+    };
+  }, [visible]);
+
   return (
-    <PopupContainer visible={visible}>
+    <PopupContainer visible={visible} onClick={togglePopup}>
       <StyledPopup>
         <CloseIcon onClick={togglePopup} />
 
@@ -61,7 +84,7 @@ const PopupContainer = styled.div`
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s, visible 0.3s;
+  transition: opacity 0.3s, visibility 0.3s;
 
   ${({ visible }) =>
     visible &&

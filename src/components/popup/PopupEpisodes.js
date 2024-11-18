@@ -23,8 +23,10 @@ export function PopupEpisodes({ episodes }) {
       .then(({ data }) => {
         if (episodes.length === 1) {
           setSeries([data]);
+          setIsFetching(false);
         } else {
           setSeries(data);
+          setIsFetching(false);
         }
       });
   }, [episodes]);

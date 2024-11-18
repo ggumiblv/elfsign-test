@@ -5,7 +5,6 @@ export function CardTitle({ name, gender, className }) {
   return (
     <CardTitleContainer className={className}>
       <StyledCardTitle className="card-title">{name}</StyledCardTitle>
-
       <GenderIcon gender={gender} />
     </CardTitleContainer>
   );
