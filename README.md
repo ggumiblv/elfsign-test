@@ -1,6 +1,6 @@
 # Elfsight Test Task (Rick and Morty API)
 
-# Инструкция по разворачиванию проекта
+## Инструкция по разворачиванию проекта
 
 1. Клонируйте репозиторий <br/>
 Откройте терминал и выполните команду: <br/> git clone https://github.com/ggumiblv/elfsign-test.git<br/>
@@ -17,5 +17,5 @@ npm install
 npm run start
 
 
-# Так же проект опубликован на gh-pages: <br/>
+## Так же проект опубликован на gh-pages: <br/>
 https://ggumiblv.github.io/elfsign-test/
