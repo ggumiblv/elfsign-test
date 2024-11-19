@@ -1,19 +1,16 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import { useData } from './providers';
 
 export function Pagination() {
   const { info, searchParams, setSearchParams } = useData();
 
-  // Получаем текущую страницу из параметров URL или ставим 1 по умолчанию
   const activePage = parseInt(searchParams.get('page')) || 1;
 
   const pageClickHandler = (index) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setSearchParams({ page: index + 1 }); // изменяем параметр страницы в URL
+    setSearchParams({ page: index + 1 });
   };
 
-  // Генерируем массив страниц
   const pages = Array.from({ length: info.pages }, (_, i) => i + 1);
 
   if (pages.length <= 1) return null;

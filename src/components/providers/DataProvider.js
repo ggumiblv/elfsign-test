@@ -43,9 +43,9 @@ export function DataProvider({ children }) {
       isError,
       info,
       searchParams,
-      setSearchParams // добавляем setSearchParams для изменения URL
+      setSearchParams
     }),
-    [characters, isFetching, isError, info, searchParams]
+    [characters, isFetching, isError, info, searchParams, setSearchParams]
   );
 
   return (

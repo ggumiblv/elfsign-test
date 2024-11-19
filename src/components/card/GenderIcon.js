@@ -14,5 +14,7 @@ export function GenderIcon({ gender }) {
       return (
         <Genderless width={24} height={24} fill="#999" title="Genderless" />
       );
+    default:
+      break;
   }
 }

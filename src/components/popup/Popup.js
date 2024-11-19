@@ -48,7 +48,7 @@ export function Popup({ settings: { visible, content = {} }, setSettings }) {
       document.body.style.overflow = 'auto';
       window.removeEventListener('keydown', handleEscClose);
     };
-  }, [visible]);
+  }, [visible, handleEscClose]);
 
   return (
     <PopupContainer visible={visible} onClick={togglePopup}>
