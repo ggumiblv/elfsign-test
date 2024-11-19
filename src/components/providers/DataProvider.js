@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const API_URL = 'https://rickandmortyapi.com/api/character/';
 
 export function DataProvider({ children }) {
-  const [activePage, setActivePage] = useState(0);
   const [characters, setCharacters] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [isError, setIsError] = useState(false);
   const [info, setInfo] = useState({});
-  const [apiURL, setApiURL] = useState(API_URL);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const fetchData = async (url) => {
     setIsFetching(true);
@@ -30,21 +30,22 @@ export function DataProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchData(apiURL);
-  }, [apiURL]);
+    const query = Object.fromEntries([...searchParams.entries()]);
+    const queryString = new URLSearchParams(query).toString();
+    const fullURL = `${API_URL}?${queryString}`;
+    fetchData(fullURL);
+  }, [searchParams]);
 
   const dataValue = useMemo(
     () => ({
-      activePage,
-      setActivePage,
-      apiURL,
-      setApiURL,
       characters,
       isFetching,
       isError,
-      info
+      info,
+      searchParams,
+      setSearchParams // добавляем setSearchParams для изменения URL
     }),
-    [activePage, apiURL, characters, isFetching, isError, info]
+    [characters, isFetching, isError, info, searchParams]
   );
 
   return (

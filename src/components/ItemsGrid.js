@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Popup } from './popup';
-import { useData } from './providers';
 import { Card } from './card';
+import { useData } from './providers';
 
 const defaultPopupSettings = {
   visible: false,
@@ -10,7 +10,7 @@ const defaultPopupSettings = {
 };
 
 export function ItemsGrid() {
-  const { characters } = useData();
+  const { characters, isFetching, isError } = useData();
   const [popupSettings, setPopupSettings] = useState(defaultPopupSettings);
 
   function cardOnClickHandler(props) {
@@ -20,8 +20,16 @@ export function ItemsGrid() {
     });
   }
 
+  if (isFetching) {
+    return <p>Загрузка данных...</p>;
+  }
+
+  if (isError) {
+    return <p>Ошибка при загрузке данных</p>;
+  }
+
   if (!characters.length) {
-    return null;
+    return <p>Нет персонажей, соответствующих фильтрам</p>;
   }
 
   return (
