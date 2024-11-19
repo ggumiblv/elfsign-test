@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { useData } from './providers';
 
 export function Pagination() {
@@ -24,15 +25,22 @@ export function Pagination() {
         </>
       )}
 
-      <Page onClick={() => pageClickHandler(activePage - 1)}>{activePage}</Page>
+      {activePage > 1 && (
+        <Page onClick={() => pageClickHandler(activePage - 2)}>
+          {activePage - 1}
+        </Page>
+      )}
 
-      <Page active>{activePage + 1}</Page>
+      <Page active>{activePage}</Page>
+
+      {activePage < pages.length && (
+        <Page onClick={() => pageClickHandler(activePage)}>
+          {activePage + 1}
+        </Page>
+      )}
 
       {activePage < pages.length && (
         <>
-          <Page onClick={() => pageClickHandler(activePage + 1)}>
-            {activePage + 2}
-          </Page>
           {activePage + 1 !== pages.length && (
             <>
               <Ellipsis>...</Ellipsis>

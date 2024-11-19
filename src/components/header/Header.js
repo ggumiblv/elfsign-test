@@ -19,6 +19,7 @@ export function Header() {
     } else {
       newParams.delete(field);
     }
+    newParams.set('page', 1);
     setSearchParams(newParams);
 
     setFilters((prev) => ({
